@@ -51,10 +51,17 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-9">
-          <%= bootstrap_flash %>
+        <div class="col-sm-9">
+          <%= react_component 'FlashMessages', messages: flash_messages %>
           <%= yield %>
         </div>
+        <div class="col-sm-3">
+          <div class="well sidebar-nav">
+            <h3>Messages</h3>
+            <%= react_component 'ReactMessages'  %>
+            <%= render 'shared/rails_messages' %>
+          </div><!--/.well -->
+        </div><!--/span-->
       </div><!--/row-->
 
     </div> <!-- /container -->

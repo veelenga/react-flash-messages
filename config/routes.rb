@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'new', to: 'messages#new'
+  get '/', to: 'messages#display'
+  root to: 'messages#display'
 end
