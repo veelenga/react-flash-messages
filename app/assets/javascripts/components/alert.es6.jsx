@@ -2,46 +2,48 @@
 
 class Alert extends React.Component {
   componentDidMount() {
-    this.timer = setTimeout(() => {
-      $(this.refs.alert).fadeTo(500, 0).slideUp(500, () => {
-        this.props.onFade(this.props.message);
-      });
-    }, this.props.timeout);
+    this.timer = setTimeout(
+      this.props.onClose,
+      this.props.timeout
+    );
   }
 
   componentWillUnmount() {
     clearTimeout(this.timer);
   }
 
-  bootstrapClass (type) {
+  alertClass (type) {
     let classes = {
-      success: 'alert-success',
-      notice: 'alert-info',
+      error: 'alert-danger',
       alert: 'alert-warning',
-      error: 'alert-danger'
+      notice: 'alert-info',
+      success: 'alert-success'
     };
     return classes[type] || classes.success;
   }
 
   render() {
-    const alertClassName = `alert ${ this.bootstrapClass(this.props.message.type) } fade in`
+    const message = this.props.message;
+    const alertClassName = `alert ${ this.alertClass(message.type) } fade in`;
+
     return(
-      <div>
-        <div className={alertClassName} ref='alert'>
-          <button className='close' data-dismiss='alert'> × </button>
-          { this.props.message.text }
-        </div>
+      <div className={ alertClassName }>
+        <button className='close'
+          onClick={ this.props.onClose }>
+          &times;
+        </button>
+        { message.text }
       </div>
     );
   }
 }
 
 Alert.propTypes = {
-  onFade: React.PropTypes.func,
+  onClose: React.PropTypes.func,
   timeout: React.PropTypes.number,
   message: React.PropTypes.object.isRequired
 };
 
 Alert.defaultProps = {
-  timeout: 2000
+  timeout: 3000
 };
